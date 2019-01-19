@@ -1,27 +1,44 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import axios from 'axios';
+import Input from './Input'
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      myList: []
+    }
+
+    this.handleUpdate = this.handleUpdate.bind(this);
+  }
+
+  componentDidMount() {
+    axios.get('/people/').then((response) => {
+      this.setState({ myList: response.data})
+    })
+  }
+
+  handleUpdate(data) {
+    this.setState({ myList: data })
+  }
+
   render() {
+    let mapped = this.state.myList.map((item) => {
+      return(
+        <div>
+          {item.name}<br/>
+          {item.age} <br/>
+          <Input updateList={this.handleUpdate} />
+        </div>
+        )
+    })
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        {mapped}
+   
       </div>
-    );
+    )
   }
 }
 
