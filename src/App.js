@@ -26,10 +26,13 @@ class App extends Component {
   render() {
     let mapped = this.state.myList.map((item) => {
       return(
-        <div>
+        <div key={item.id}>
           {item.name}<br/>
           {item.age} <br/>
-          <Input updateList={this.handleUpdate} />
+          <Input 
+                updateList={this.handleUpdate}
+                id={item.id}
+          />
         </div>
         )
     })

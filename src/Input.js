@@ -17,11 +17,11 @@ class Input extends React.Component {
  handleChange(value) {
   this.setState({ name: value})
  }
- handleUpdate() {
+ handleUpdate(id) {
   let text = {
    text: this.state.name
   }
-  axios.put(`/people/0`, text).then((response) => {
+  axios.put(`/people/${id}`, text).then((response) => {
     this.props.updateList(response.data);
     this.handleClick();
   }).catch(error => console.log(error)) 
@@ -37,7 +37,7 @@ class Input extends React.Component {
       onChange = {(e) => this.handleChange(e.target.value)}
       value={this.state.name}
      />
-     <button onClick={() => this.handleUpdate()}>Submit</button>
+     <button onClick={() => this.handleUpdate(this.props.id)}>Submit</button>
     </div>
     }
    </div>
